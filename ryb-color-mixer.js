@@ -39,7 +39,17 @@
 
         // check if we got an array, but not if the array is just a representation of hex
         if (arguments[0].constructor == Array && typeof arguments[0][0] != "number") {
-            colors = arguments[0]; 
+            if(typeof arguments[0][0] === 'object') {
+                var count = arguments[0][0].parts || 1;
+                var color = arguments[0][0].color;
+                if(color) {
+                    for(var i = 0, length = count; i < length; i++) {
+                        colors.push(color);
+                    }
+                }
+            } else {
+                colors = arguments[0]; 
+            }
         } else {
             colors = arguments; 
         }
@@ -122,7 +132,7 @@
 
         });
 
-        return listCopy[0].replace("#", "");
+        return listCopy[0];
 
     }
 
@@ -184,7 +194,7 @@
         var rHex = Math.round(rgbArray[0]).toString(16); rHex = rHex.length == 1 ? "0" + rHex : rHex;
         var gHex = Math.round(rgbArray[1]).toString(16); gHex = gHex.length == 1 ? "0" + gHex : gHex;
         var bHex = Math.round(rgbArray[2]).toString(16); bHex = bHex.length == 1 ? "0" + bHex : bHex;
-        return rHex + gHex + bHex;;
+        return '#' + rHex + gHex + bHex;;
     }
 
     function cubicInt(t, A, B){
